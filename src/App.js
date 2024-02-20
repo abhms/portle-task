@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Editor, EditorState, ContentState, convertFromRaw, convertToRaw } from 'draft-js';
+import { Editor, EditorState, convertFromRaw, convertToRaw, Modifier, SelectionState } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 
 function App() {
@@ -31,6 +31,28 @@ function App() {
     localStorage.setItem('editorContent', JSON.stringify(rawContentState));
   };
 
+  const handleEditorChange = (newEditorState) => {
+    const contentState = newEditorState.getCurrentContent();
+    const selectionState = newEditorState.getSelection();
+
+    
+    const lastBlock = contentState.getLastBlock();
+    const lastBlockText = lastBlock.getText();
+    if (lastBlockText.startsWith('* ') && lastBlockText.length > 2) {
+      const newContentState = Modifier.applyInlineStyle(
+        contentState,
+        selectionState.merge({
+          anchorOffset: 0,
+          focusOffset: lastBlockText.length,
+        }),
+        'BOLD'
+      );
+      newEditorState = EditorState.push(newEditorState, newContentState, 'change-inline-style');
+    }
+
+    setEditorState(newEditorState);
+  };
+
   return (
     <div className="App">
       <div className="header">
@@ -38,7 +60,7 @@ function App() {
         <button className="saveButton" onClick={handleSave}>Save</button>
       </div>
       <div className="editor">
-        <Editor editorState={editorState} onChange={setEditorState} />
+        <Editor editorState={editorState} onChange={handleEditorChange} />
       </div>
     </div>
   );
