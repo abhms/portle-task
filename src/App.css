@@ -69,6 +69,22 @@
   background-color: #dae2ea;
   height: 430px;
 }
-.public-DraftStyleDefault-block {
-  color: red;
+
+
+/* span[data-offset-key="3gtuq-0-0"] {
+ color: red;
 }
+span[style*="text-decoration: underline;"] {
+  color: black;
+  font-size: 20px;
+} */
+
+/* Style spans with both data-text="true" and containing a <br> element */
+/* span[data-offset-key][data-text="true"] > br[data-text="true"] {
+  color: black !important;
+} */
+
+/* Style spans with data-offset-key="3gtuq-0-0" */
+/* span[data-offset-key="3gtuq-0-0"] {
+  color: red;
+} */
