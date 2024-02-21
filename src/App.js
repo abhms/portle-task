@@ -86,7 +86,7 @@ function App() {
           anchorOffset: 0,
           focusOffset: lastBlockText.length,
         }),
-        { textColor: "#ff0000" }
+        "public-DraftStyleDefault-block"
       );
       contentState = Modifier.replaceText(
         contentState,
